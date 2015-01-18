@@ -1,8 +1,9 @@
 #! /usr/bin/env python2
 #coding=utf-8
 
+print '\n\nSTART\n'
 #############################
-# Calcul du modèle linéaire #
+#           THETA           #
 #############################
 
 
@@ -34,24 +35,50 @@ mul_x_y = np.dot(xfinal,y)
 
 #multiplication de l'inversion et mul_x_y
 mul_inv_xy = np.dot(inv_mul_x_xT, mul_x_y)
-print mul_inv_xy
 
 
+#on a trouvé theta
+theta = mul_inv_xy
+
+print '\nValeur de Theta : '
+print theta 
 
 
-##########################
-# Affichage de la droite #
-##########################
+#############################
+#    ERREUR QUADRATIQUE     #
+#############################
+
+#On calcul l'erreur quadratique moyenne pondérée à l'aidde de la formule suivante :
+# (1/N)(y - theta.T * x )² CEPENDANT RAPPEL : A² = A.T*A
+# => (1/N)(y - theta.T * x).T * (y - theta.T*x) 
+a = y - np.dot(theta.T, xfinal)
+a = np.dot(a.T, a)
+errQ = (1.0/len(x)) * a
+
+print '\nValeur de l\'erreur quadratique moyenne pondérée : '
+print errQ
 
 
-import pylab as pl
-pl.plot(mul_inv_xy)
-#pl.plot(x,y)
+########################
+#       F_THETA        #
+########################
+
+f_theta = np.dot(theta.T, xfinal)
 
 
+#######################################
+# Affichage des points et de f_theta  #
+#######################################
 
 
-##########################################
-# Calcul de l'erreur moyenne quadratique #
-##########################################
+import matplotlib.pyplot as pl
+pl.xlabel('Temps')
+pl.ylabel('Positions')
+pl.title('TP1 - Fonction = f_theta(Temps)')
+pl.plot(x,y, '*')
+pl.plot(x,f_theta)
+pl.grid(True)
+pl.show()
+print('\nLe graphe représentant la fonction F_Theta dans le temps a été tracé.')
+
 
