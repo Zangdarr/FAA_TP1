@@ -50,8 +50,9 @@ print theta
 
 #On calcul l'erreur quadratique moyenne pondérée à l'aidde de la formule suivante :
 # (1/N)(y - theta.T * x )² CEPENDANT RAPPEL : A² = A.T*A
-# => (1/N)(y - theta.T * x).T * (y - theta.T*x) 
-a = y - np.dot(theta.T, xfinal)
+# => (1/N)(y - x.T * theta).T * (y - theta.T*x) 
+a = y - np.dot(xfinal.T, theta)
+
 a = np.dot(a.T, a)
 errQ = (1.0/len(x)) * a
 
